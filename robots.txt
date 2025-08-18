@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://meetsidekick.pages.dev/sitemap.xml
