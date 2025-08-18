@@ -811,6 +811,13 @@ body {
     line-height: 1.7;
 }
 
+.disclaimer {
+    font-size: var(--font-size-sm);
+    margin: 0;
+    font-style: italic;
+    opacity: 0.8;
+}
+
 .team {
     font-size: var(--font-size-sm);
     margin: 0;
@@ -1043,6 +1050,10 @@ model-viewer {
     }
     
     .description {
+        font-size: var(--font-size-sm);
+    }
+
+    .disclaimer {
         font-size: var(--font-size-sm);
     }
     
