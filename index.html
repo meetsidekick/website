@@ -3,50 +3,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIDEKICK v0</title>
+    <title>SIDEKICK v0 - Your Hackable Digital Pet</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --color-black: #000000;
+            --color-white: #ffffff;
+            --color-gray-100: #f5f5f5;
+            --color-gray-300: #a7a9a9;
+            --color-gray-700: #374151;
+            --color-teal-500: #14b8a6;
+            --color-teal-600: #0d9488;
+            --space-8: 8px;
+            --space-16: 16px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --space-48: 48px;
+            --space-64: 64px;
+            --radius-lg: 12px;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0 0 60px 0; /* Add bottom padding for fixed footer */
+            font-family: var(--font-mono);
+            background-color: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: var(--space-64) var(--space-32);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-64);
+            align-items: center;
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin: 0 0 var(--space-24) 0;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin: 0 0 var(--space-32) 0;
+            opacity: 0.9;
+            color: var(--color-teal-500);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin: 0 0 var(--space-32) 0;
+            opacity: 0.85;
+        }
+
+        .status-badges {
+            display: flex;
+            gap: var(--space-16);
+            flex-wrap: wrap;
+        }
+
+        .preorder-btn {
+            background: var(--color-teal-500);
+            color: var(--color-white);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-lg);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .preorder-btn:hover {
+            background: var(--color-teal-600);
+            transform: translateY(-1px);
+        }
+
+        .status-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-lg);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-model {
+            position: relative;
+            height: 500px;
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-white);
+            border-radius: var(--radius-lg);
+        }
+
+        .fallback-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--color-black);
+            background: var(--color-white);
+            padding: var(--space-32);
+            border-radius: var(--radius-lg);
+            max-width: 300px;
+            display: none;
+        }
+
+        .fallback-message.show {
+            display: block;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-64) var(--space-32);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 var(--space-64) 0;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-32);
+            margin-bottom: var(--space-64);
+        }
+
+        .feature-card {
+            background: var(--color-gray-100);
+            border-radius: var(--radius-lg);
+            padding: var(--space-32);
+            border-left: 4px solid var(--color-teal-500);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 var(--space-16) 0;
+            color: var(--color-teal-600);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .specs-section {
+            background: var(--color-black);
+            color: var(--color-white);
+            margin: var(--space-64) -32px;
+            padding: var(--space-64) var(--space-32);
+        }
+
+        .specs-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .specs-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 var(--space-16) 0;
+            text-transform: uppercase;
+            color: var(--color-teal-500);
+        }
+
+        .specs-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin: 0 0 var(--space-48) 0;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-24);
+        }
+
+        .spec-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            transition: background-color 0.2s ease;
+        }
+
+        .spec-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .spec-name {
+            font-weight: 700;
+            color: var(--color-teal-500);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 0 0 var(--space-8) 0;
+        }
+
+        .spec-value {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .availability-section {
+            text-align: center;
+            margin: var(--space-64) 0;
+        }
+
+        .availability-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 var(--space-32) 0;
+            text-transform: uppercase;
+        }
+
+        .availability-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-32);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .availability-card {
+            background: var(--color-gray-100);
+            border-radius: var(--radius-lg);
+            padding: var(--space-32);
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .availability-card.featured {
+            border-color: var(--color-teal-500);
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .availability-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 var(--space-16) 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0 0 var(--space-24) 0;
+            opacity: 0.9;
+        }
+
+        .card-status {
+            background: var(--color-teal-500);
+            color: var(--color-white);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-lg);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-block;
+        }
+
+        .team-section {
+            background: var(--color-gray-100);
+            padding: var(--space-48) var(--space-32);
+            margin: var(--space-64) -32px;
+            text-align: center;
+        }
+
+        .team-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .team-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 var(--space-24) 0;
+            text-transform: uppercase;
+        }
+
+        .team-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin: 0 0 var(--space-24) 0;
+        }
+
+        .team-credits {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .team-credits a {
+            color: var(--color-teal-600);
+            text-decoration: none;
+        }
+
+        .team-credits a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--space-16) var(--space-32);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: auto;
+            font-size: 0.8rem;
+        }
+
+        .footer-disclaimer {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            max-width: 60%;
+            line-height: 1.4;
+        }
+
+        .footer-disclaimer a {
+            color: var(--color-teal-500);
+            text-decoration: none;
+            opacity: 0.9;
+        }
+
+        .footer-disclaimer a:hover {
+            text-decoration: underline;
+            opacity: 1;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: var(--space-8) var(--space-16);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-white);
+            transform: translateY(-1px);
+        }
+
+        .github-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .github-link:hover .github-arrow {
+            transform: translateX(4px);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: 80px; /* Increased for mobile footer height */
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-32);
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .hero-model {
+                height: 300px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .availability-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .status-badges {
+                justify-content: center;
+            }
+
+            .specs-section,
+            .team-section {
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: var(--space-12);
+                text-align: center;
+            }
+
+            .footer-disclaimer {
+                max-width: 100%;
+                order: 2;
+            }
+
+            .github-link {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-section {
+                padding: var(--space-32) var(--space-16);
+            }
+
+            .hero-section {
+                padding: var(--space-48) var(--space-16);
+            }
+
+            .specs-section,
+            .team-section {
+                padding-left: var(--space-16);
+                padding-right: var(--space-16);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- Left Content Section -->
-        <div class="content-section">
-            <div class="content-wrapper">
-                <h1 class="main-title">SIDEKICK v0</h1>
-                
-                <div class="status">
-                                    <div class="greetings">
-                    <p class="greeting">Hello World.</p>
-                    <p class="greeting">Greetings.</p>
-                    <p class="greeting">Namaskaram.</p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">SIDEKICK v0</h1>
+                <p class="hero-subtitle">Your Hackable Digital Pet</p>
+                <p class="hero-description">
+                    Meet Sidekick, the Tamagotchi-inspired digital companion that brings personality and endless hackability to your workspace. More than a gadget—it's a platform for your creativity.
+                </p>
+                <div class="status-badges">
+                    <a href="#" class="preorder-btn">Pre-order Now</a>
+                    <span class="status-badge">Open Source</span>
                 </div>
-                <vr>
-
-                    <p class="disclaimer">Sidekick is an independent open-source hardware project. Not affiliated with Sidekick Browser or any other 'Sidekick' software or hardware products</p>
-                    <span class="status-text">Work in Progress</span>
-                    <span class="status-separator">•</span>
-                    <span class="status-text">Coming Soon</span>
-
-                </div>
-
-                <div class="description-section">
-                    <p class="description">Open Source Digital Pet! The hardware companion for everyone.</p>
-                    <p class="description">This page will be replaced soon, but for now, we have a PCB preview screen.</p>
-                    <p class="team">- Team "Burn this Hardware"</p>
-					<a class="credits" href="https://mono.layogtima.com/" target="_blank">Built with MONO design system in mind</a>
-					</br>
-                    <a class="credits" href="https://modelviewer.dev/" target="_blank">Preview Built with Google's Model Viewer</a>
-                </div>
-            </br>
             </div>
-        </div>
-        
-        <!-- Right Model Viewer Section -->
-        <div class="model-section">
-            <div class="model-container">
+            <div class="hero-model">
                 <model-viewer
                     id="sidekick-model"
                     src="https://cdn.jsdelivr.net/gh/meetsidekick/pcb@main/assets/3d/sidekick-min-gltfpack.glb"
@@ -60,41 +548,254 @@
                     shadow-intensity="0"
                     camera-orbit="78.91deg 66.94deg 0.1797m" 
                     field-of-view="30deg">
-		<!--				<button class="hotspot" slot="hotspot-1" data-position="0.11803371233434905m 0.015751828064800022m 0.11742797349302309m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">Display(0.96 inch)</div>
-						</button><button class="hotspot" slot="hotspot-2" data-position="0.1518977138897478m 0.01360268155879998m 0.11086322274502718m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">PCBCUPID Glyph-C3</div>
-						</button><button class="hotspot" slot="hotspot-3" data-position="0.1710445942576m 0.004115679722560231m 0.12111805547572145m" data-normal="1m 0m 0m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">ADXL345 Accelerometer</div>
-						</button><button class="hotspot" slot="hotspot-4" data-position="0.1381164021569825m 0.007873874001384285m 0.11309986520638787m" data-normal="-0.6069136033622302m 0m -0.7947678139267301m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">Buzzer</div>
-						</button>       
-                        
-                    -->
                 </model-viewer>
-                
-                <!-- Fallback error message -->
                 <div class="fallback-message" id="fallback">
                     <p>We wanted to show the sidekick here but it didn't quite work out!</p>
-                    </br>
+                    <br>
                     <p>:(</p>
-                    </br>
-                    <p>If you are using a privacy-focused browser, please enable WebGL and JIT/Javascript! Try reloading...?s</p>
+                    <br>
+                    <p>If you are using a privacy-focused browser, please enable WebGL and JavaScript! Try reloading...?</p>
                 </div>
             </div>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Features Section -->
+    <section class="content-section">
+        <h2 class="section-title">Why You'll Love Sidekick</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3 class="feature-title">A Companion with Character</h3>
+                <p class="feature-description">
+                    Watch your Sidekick react to motion and touch, displaying its "mood" on a vibrant OLED screen. Every interaction is unique, bringing life to your workspace.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Infinitely Customizable</h3>
+                <p class="feature-description">
+                    Dive into its open-source hardware and software. Install custom firmware, add new features, and program unique behaviors. Your Sidekick, your rules.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Connected & Smart</h3>
+                <p class="feature-description">
+                    Built with an ESP32, Sidekick boasts Wi-Fi and Bluetooth, opening up a world of possibilities for smart integrations and creative projects.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Portable Fun</h3>
+                <p class="feature-description">
+                    Designed to be carried with you, Sidekick is ready to bring a smile wherever you go. Compact, durable, and always entertaining.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specifications Section -->
+    <section class="specs-section">
+        <div class="specs-content">
+            <h2 class="specs-title">For The Nerds</h2>
+            <p class="specs-subtitle">(We love you). Here's what powers the SIDEKICK.</p>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <h4 class="spec-name">Processor</h4>
+                    <p class="spec-value">ESP32 dual-core with Wi-Fi and Bluetooth</p>
+                </div>
+                <div class="spec-item">
+                    <h4 class="spec-name">Display</h4>
+                    <p class="spec-value">0.96" OLED high-contrast screen</p>
+                </div>
+                <div class="spec-item">
+                    <h4 class="spec-name">Sensors</h4>
+                    <p class="spec-value">ADXL345 3-axis accelerometer</p>
+                </div>
+                <div class="spec-item">
+                    <h4 class="spec-name">Audio</h4>
+                    <p class="spec-value">Integrated buzzer for feedback</p>
+                </div>
+                <div class="spec-item">
+                    <h4 class="spec-name">Connectivity</h4>
+                    <p class="spec-value">Wi-Fi 802.11 b/g/n + Bluetooth 4.2</p>
+                </div>
+                <div class="spec-item">
+                    <h4 class="spec-name">Power</h4>
+                    <p class="spec-value">USB-C charging with battery management</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Availability Section -->
+    <section class="content-section">
+        <div class="availability-section">
+            <h2 class="availability-title">Choose Your Adventure</h2>
+            <div class="availability-cards">
+                <div class="availability-card">
+                    <h3 class="card-title">DIY Kit</h3>
+                    <p class="card-description">
+                        The full experience, assembly required. For the true hackers who love building from scratch.
+                    </p>
+                    <span class="card-status">Pre-order</span>
+                </div>
+                <div class="availability-card featured">
+                    <h3 class="card-title">Pre-built</h3>
+                    <p class="card-description">
+                        Fully assembled and ready to hack. The complete package for immediate digital pet companionship.
+                    </p>
+                    <span class="card-status">In Development</span>
+                </div>
+                <div class="availability-card">
+                    <h3 class="card-title">Files & Code</h3>
+                    <p class="card-description">
+                        Every line of code, every component specification. No secrets, no walled gardens. Build your own.
+                    </p>
+                    <span class="card-status">Available Now</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="team-content">
+            <h2 class="team-title">From Team "Burn This Hardware"</h2>
+            <p class="team-description">
+                Join our growing community of hackers, makers, and digital pet enthusiasts. 
+                Every line of code, every component specification is available for you to explore, modify, and improve.
+            </p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
+            <div class="footer-disclaimer">
+                <strong>Disclaimer:</strong> Sidekick is an independent open-source hardware project. Not affiliated with Sidekick Browser or any other 'Sidekick' products. 
+                Built with <a href="https://mono.layogtima.com/" target="_blank">MONO design system</a> • 
+                <a href="https://modelviewer.dev/" target="_blank">Model Viewer</a>
+            </div>
             <a href="https://github.com/meetsidekick" target="_blank" rel="noopener noreferrer" class="github-link">
-                <span class="github-text">open source</span>
+                <span class="github-text">Open Source</span>
                 <span class="github-arrow">→</span>
             </a>
         </div>
     </footer>
-    
-    <script src="app.js"></script>
+
+    <script>
+        /* SIDEKICK v0 — JavaScript functionality
+           (text-load animations + model-load fallback handling) */
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modelViewer = document.getElementById('sidekick-model');
+            const fallbackMsg = document.getElementById('fallback');
+            let modelTimeout;
+
+            /* ---------- Fallback helpers ---------- */
+            function showFallback() {
+                if (!fallbackMsg) return;
+                console.log('Showing fallback message');
+                fallbackMsg.classList.add('show');
+                fallbackMsg.style.opacity = '1';
+                fallbackMsg.style.display = 'block';
+                if (modelViewer) modelViewer.style.display = 'none';
+            }
+
+            function hideFallback() {
+                if (!fallbackMsg) return;
+                fallbackMsg.classList.remove('show');
+                fallbackMsg.style.opacity = '0';
+                fallbackMsg.style.display = 'none';
+            }
+
+            /* ---------- Model-viewer handling ---------- */
+            if (modelViewer) {
+                fallbackMsg.style.display = 'none';
+
+                modelViewer.style.transition = 'none';
+                modelViewer.style.willChange = 'auto';
+                modelViewer.setAttribute('power-preference', 'low-power');
+                modelViewer.setAttribute('shadow-softness', '0');
+
+                modelTimeout = setTimeout(() => {
+                    if (!modelViewer.loaded) {
+                        console.warn('Model loading timeout after 8 s');
+                        showFallback();
+                    }
+                }, 8000);
+
+                modelViewer.addEventListener('load', () => {
+                    console.log('Model loaded successfully');
+                    clearTimeout(modelTimeout);
+                    fallbackMsg.classList.remove('show');
+                    modelViewer.style.display = 'block';
+                    modelViewer.style.transition = 'opacity 0.2s ease';
+                });
+
+                modelViewer.addEventListener('error', e => {
+                    console.error('Model failed to load:', e.detail);
+                    clearTimeout(modelTimeout);
+                    showFallback();
+                });
+
+                /* Quick source validation */
+                const originalSrc = modelViewer.src;
+                setTimeout(() => {
+                    if (modelViewer.src !== originalSrc || !modelViewer.src) {
+                        console.warn('Model source became invalid');
+                        showFallback();
+                    }
+                }, 3000);
+
+                /* Improved camera-controls UX */
+                let cameraTimeout;
+                modelViewer.addEventListener('camera-change', () => {
+                    modelViewer.style.filter = 'none';
+                    modelViewer.style.cursor = 'grabbing';
+                    clearTimeout(cameraTimeout);
+                    cameraTimeout = setTimeout(() => {
+                        modelViewer.style.cursor = 'grab';
+                    }, 100);
+                });
+
+            } else {
+                console.error('Model viewer element not found');
+                showFallback();
+            }
+
+            /* ---------- Keyboard shortcuts ---------- */
+            function initKeyboardNavigation() {
+                document.addEventListener('keydown', e => {
+                    if (!modelViewer || !modelViewer.loaded) return;
+                    if (e.key === 'Escape') {
+                        modelViewer.cameraOrbit = '45deg 75deg 5m';
+                        modelViewer.fieldOfView = 'auto';
+                    }
+                    if (e.key === ' ' && e.target === document.body) {
+                        e.preventDefault();
+                        modelViewer.autoRotate = !modelViewer.autoRotate;
+                    }
+                });
+            }
+
+            initKeyboardNavigation();
+
+            // Console easter egg
+            console.log(`
+                ╔═══════════════════════════════════════╗
+                ║               SIDEKICK v0             ║
+                ║       Team "Burn this Hardware"       ║
+                ║                                       ║
+                ║   Press SPACE to toggle auto-rotate   ║
+                ║    Press ESC to reset camera view     ║
+                ║ GitHub link: github.com/meetsidekick  ║
+                ╚═══════════════════════════════════════╝
+            `);
+
+            window.addEventListener('load', () => {
+                document.body.classList.add('loaded');
+                console.log('SIDEKICK v0 application fully loaded');
+            });
+        });
+    </script>
 </body>
 </html>
