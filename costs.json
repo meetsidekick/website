@@ -1,0 +1,64 @@
+{
+  "currency": "INR",
+  "items": [
+    {
+      "name": "Dev Board",
+      "desc": "PCBCupid ESP32 Glyph C3 with Wi-Fi and Bluetooth",
+      "cost": 500,
+      "link": "https://shop.pcbcupid.com/product/gd001/"
+    },
+    {
+      "name": "Display",
+      "desc": "0.96\" OLED Screen",
+      "cost": 200,
+      "link": "https://robocraze.com/products/0-96in-oled-display-module-4pin"
+    },
+    {
+      "name": "Sensors",
+      "desc": "ADXL345 3-axis accelerometer",
+      "cost": 150,
+      "link": "https://robocraze.com/products/adxl-345"
+    },
+    {
+      "name": "Audio",
+      "desc": "3V Buzzer",
+      "cost": 35,
+      "link": "https://robocraze.com/products/bc547-transistor" 
+    },
+    {
+      "name": "Bipolar Transistor",
+      "desc": "BC547 transistor",
+      "cost": 10,
+      "link": "https://robocraze.com/products/bc547-transistor-ic-pack-of-5" 
+    },
+    {
+      "name": "Diode",
+      "desc": "SM4007PL Schottky Diode",
+      "cost": 1,
+      "link": "https://robu.in/product/sm4007pl-a7-slkor-1a-1kv-1-1v1a-sod-123fl-diodes-general-purpose-rohs/"
+    },
+    {
+      "name": "1kOhm Resistor",
+      "desc": "1k Ohm Resistor",
+      "cost": 10,
+      "link": "https://robocraze.com/products/1k-ohm-resistor-5-pack"
+    },
+    {
+      "name": "Battery",
+      "desc": "3.7V 500mAh Li-Po Battery",
+      "cost": 150,
+      "link": "https://robocraze.com/products/witty-fox-500mah-rechargeable-3-7v-lipo-battery?_pos=1&_sid=0201f5e50&_ss=r"
+    },
+    {
+      "name": "PCB",
+      "desc": "By LionCircuits, roughly 1200 for 10 pcs",
+      "cost": 120,
+      "link": "https://github.com/meetsidekick/pcb/"
+    }
+  ],
+  "extraCost": [
+    { "name": "GST", "cost": 0 }
+  ],
+  "Final Sidekick Cost(Excl GST, Shipping, Dev Costs)": 2000,
+  "Final Sidekick Cost": 3000
+}

@@ -38,6 +38,7 @@
             background-color: var(--color-white);
             color: var(--color-black);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .hero-section {
@@ -113,14 +114,29 @@
         }
 
         .status-badge {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: var(--space-8) var(--space-16);
-            border-radius: var(--radius-lg);
-            font-size: 0.85rem;
+            display: inline-block;
+            background: rgba(20,184,166,0.13);
+            border: 2px solid var(--color-teal-500);
+            color: var(--color-teal-600);
+            padding: 10px 22px;
+            border-radius: 32px;
+            font-size: 0.95rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
+            box-shadow: 0 2px 12px rgba(20,184,166,0.08);
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            margin-left: 8px;
+            margin-right: 8px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .status-badge:hover {
+            background: var(--color-teal-500);
+            color: #fff;
+            box-shadow: 0 4px 24px rgba(20,184,166,0.18);
         }
 
         .hero-model {
@@ -169,26 +185,63 @@
             margin: 0 0 var(--space-64) 0;
             text-transform: uppercase;
             letter-spacing: -0.01em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title-bg {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 120%;
+            background: rgba(255,255,255,0.18); /* Lowered opacity for less washout */
+            border-radius: var(--radius-lg);
+            z-index: 1;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+            pointer-events: none;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: var(--space-32);
             margin-bottom: var(--space-64);
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         .feature-card {
             background: var(--color-gray-100);
-            border-radius: var(--radius-lg);
+            border-radius: 32px;
             padding: var(--space-32);
             border-left: 4px solid var(--color-teal-500);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            min-width: 0;
         }
 
         .feature-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card-like background for love section title */
+        .love-title-card {
+            display: inline-block;
+            background: rgba(255,255,255,0.55);
+            border-radius: 32px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+            padding: 18px 40px 14px 40px;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 3;
         }
 
         .feature-title {
@@ -531,7 +584,7 @@
                 </p>
                 <div class="status-badges">
                     <a href="#" class="preorder-btn">Pre-order Now</a>
-                    <span class="status-badge">Open Source</span>
+                    <a href="https://engineering.meetsidekick.tech/docs/reference/open-source/" class="status-badge">Open Source... How?</a>
                 </div>
             </div>
             <div class="hero-model">
@@ -561,32 +614,38 @@
     </section>
 
     <!-- Features Section -->
-    <section class="content-section">
-        <h2 class="section-title">Why You'll Love Sidekick</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3 class="feature-title">A Companion with Character</h3>
-                <p class="feature-description">
-                    Watch your Sidekick react to motion and touch, displaying its "mood" on a vibrant OLED screen. Every interaction is unique, bringing life to your workspace.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">Infinitely Customizable</h3>
-                <p class="feature-description">
-                    Dive into its open-source hardware and software. Install custom firmware, add new features, and program unique behaviors. Your Sidekick, your rules.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">Connected & Smart</h3>
-                <p class="feature-description">
-                    Built with an ESP32, Sidekick boasts Wi-Fi and Bluetooth, opening up a world of possibilities for smart integrations and creative projects.
-                </p>
-            </div>
-            <div class="feature-card">
-                <h3 class="feature-title">Portable Fun</h3>
-                <p class="feature-description">
-                    Designed to be carried with you, Sidekick is ready to bring a smile wherever you go. Compact, durable, and always entertaining.
-                </p>
+    <section id="love-section" style="position:relative;overflow:hidden;padding:0;">
+        <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;z-index:0;overflow:hidden;pointer-events:none;">
+            <video autoplay muted loop playsinline id="love-video" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.7);background:#000;transition:opacity 0.3s;" poster=""></video>
+        </div>
+        <div class="love-content" style="position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;padding:var(--space-64) var(--space-32);display:flex;flex-direction:column;align-items:center;box-sizing:border-box;">
+            <div class="section-title-bg"></div>
+            <div class="love-title-card"><h2 class="section-title" style="margin:0;">Why You'll Love Sidekick</h2></div>
+            <div class="features-grid">
+                <div class="feature-card" style="margin-bottom:16px;background:rgba(255,255,255,0.92);box-shadow:0 2px 8px rgba(0,0,0,0.04);border-radius:32px;max-width:100%;overflow-wrap:break-word;">
+                    <h3 class="feature-title">A Companion with Character</h3>
+                    <p class="feature-description">
+                        Watch your Sidekick react to motion and touch, displaying its "mood" on a vibrant OLED screen. Every interaction is unique, bringing life to your workspace.
+                    </p>
+                </div>
+                <div class="feature-card" style="margin-bottom:16px;background:rgba(255,255,255,0.92);box-shadow:0 2px 8px rgba(0,0,0,0.04);border-radius:32px;max-width:100%;overflow-wrap:break-word;">
+                    <h3 class="feature-title">Infinitely Customizable</h3>
+                    <p class="feature-description">
+                        Dive into its open-source hardware and software. Install custom firmware, add new features, and program unique behaviors. Your Sidekick, your rules.
+                    </p>
+                </div>
+                <div class="feature-card" style="margin-bottom:16px;background:rgba(255,255,255,0.92);box-shadow:0 2px 8px rgba(0,0,0,0.04);border-radius:32px;max-width:100%;overflow-wrap:break-word;">
+                    <h3 class="feature-title">Connected & Smart</h3>
+                    <p class="feature-description">
+                        Built with an ESP32, Sidekick boasts Wi-Fi and Bluetooth, opening up a world of possibilities for smart integrations and creative projects.
+                    </p>
+                </div>
+                <div class="feature-card" style="margin-bottom:0;background:rgba(255,255,255,0.92);box-shadow:0 2px 8px rgba(0,0,0,0.04);border-radius:32px;max-width:100%;overflow-wrap:break-word;">
+                    <h3 class="feature-title">Portable Fun</h3>
+                    <p class="feature-description">
+                        Designed to be carried with you, Sidekick is ready to bring a smile wherever you go. Compact, durable, and always entertaining.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -596,30 +655,11 @@
         <div class="specs-content">
             <h2 class="specs-title">For The Nerds</h2>
             <p class="specs-subtitle">(We love you). Here's what powers the SIDEKICK.</p>
-            <div class="specs-grid">
-                <div class="spec-item">
-                    <h4 class="spec-name">Processor</h4>
-                    <p class="spec-value">ESP32 dual-core with Wi-Fi and Bluetooth</p>
-                </div>
-                <div class="spec-item">
-                    <h4 class="spec-name">Display</h4>
-                    <p class="spec-value">0.96" OLED high-contrast screen</p>
-                </div>
-                <div class="spec-item">
-                    <h4 class="spec-name">Sensors</h4>
-                    <p class="spec-value">ADXL345 3-axis accelerometer</p>
-                </div>
-                <div class="spec-item">
-                    <h4 class="spec-name">Audio</h4>
-                    <p class="spec-value">Integrated buzzer for feedback</p>
-                </div>
-                <div class="spec-item">
-                    <h4 class="spec-name">Connectivity</h4>
-                    <p class="spec-value">Wi-Fi 802.11 b/g/n + Bluetooth 4.2</p>
-                </div>
-                <div class="spec-item">
-                    <h4 class="spec-name">Power</h4>
-                    <p class="spec-value">USB-C charging with battery management</p>
+            <div class="specs-grid" id="specs-grid"></div>
+            <div style="margin-top:32px;max-width:400px;margin-left:auto;margin-right:auto;">
+                <div id="costs-bill" style="background:rgba(0,0,0,0.85);border-radius:16px;padding:24px 16px;text-align:left;font-family:var(--font-mono);box-shadow:0 2px 16px rgba(0,0,0,0.10);border:2px dashed #14b8a6;position:relative;overflow:hidden;color:#fff;">
+                    <div style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0.08;background:url('data:image/svg+xml;utf8,<svg width=\'100%\' height=\'100%\' xmlns=\'http://www.w3.org/2000/svg\'><text x=\'10\' y=\'40\' font-size=\'32\' fill=\'#14b8a6\' font-family=\'monospace\'>BILL</text></svg>') repeat;"></div>
+                    <!-- Bill will be loaded here -->
                 </div>
             </div>
         </div>
@@ -631,25 +671,19 @@
             <h2 class="availability-title">Choose Your Adventure</h2>
             <div class="availability-cards">
                 <div class="availability-card">
-                    <h3 class="card-title">DIY Kit</h3>
-                    <p class="card-description">
-                        The full experience, assembly required. For the true hackers who love building from scratch.
-                    </p>
-                    <span class="card-status">Pre-order</span>
-                </div>
-                <div class="availability-card featured">
-                    <h3 class="card-title">Pre-built</h3>
-                    <p class="card-description">
-                        Fully assembled and ready to hack. The complete package for immediate digital pet companionship.
-                    </p>
-                    <span class="card-status">In Development</span>
+                    <h3 class="card-title">Buy Preassembled Sidekick</h3>
+                    <p class="card-description">PreOrders opening soon</p>
+                    <span class="card-status">Coming Soon</span>
                 </div>
                 <div class="availability-card">
-                    <h3 class="card-title">Files & Code</h3>
-                    <p class="card-description">
-                        Every line of code, every component specification. No secrets, no walled gardens. Build your own.
-                    </p>
-                    <span class="card-status">Available Now</span>
+                    <h3 class="card-title">Sidekick Kits</h3>
+                    <p class="card-description">WIP/Under Consideration</p>
+                    <span class="card-status">WIP</span>
+                </div>
+                <div class="availability-card featured">
+                    <h3 class="card-title">Engineer Your Own</h3>
+                    <p class="card-description">Guide Coming Soon</p>
+                    <span class="card-status">Coming Soon</span>
                 </div>
             </div>
         </div>
@@ -674,8 +708,8 @@
                 Built with <a href="https://mono.layogtima.com/" target="_blank">MONO design system</a> • 
                 <a href="https://modelviewer.dev/" target="_blank">Model Viewer</a>
             </div>
-            <a href="https://github.com/meetsidekick" target="_blank" rel="noopener noreferrer" class="github-link">
-                <span class="github-text">Open Source</span>
+            <a href="https://engineering.meetsidekick.tech/docs/reference/open-source/" target="_blank" rel="noopener noreferrer" class="github-link">
+                <span class="github-text">OPEN SOURCE... HOW?</span>
                 <span class="github-arrow">→</span>
             </a>
         </div>
@@ -685,10 +719,65 @@
         /* SIDEKICK v0 — JavaScript functionality
            (text-load animations + model-load fallback handling) */
 
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
             const modelViewer = document.getElementById('sidekick-model');
             const fallbackMsg = document.getElementById('fallback');
             let modelTimeout;
+
+            // Load costs.json and update nerds section
+            fetch('costs.json').then(r => r.json()).then(data => {
+                const specsGrid = document.getElementById('specs-grid');
+                if (specsGrid) {
+                    specsGrid.innerHTML = '';
+                    data.items.forEach(item => {
+                        specsGrid.innerHTML += `
+                            <div class="spec-item">
+                                <h4 class="spec-name">${item.name}</h4>
+                                <p class="spec-value">${item.desc}${item.link ? ` <a href='${item.link}' target='_blank' style='color:#14b8a6;text-decoration:underline;'>[Buy]</a>` : ''}</p>
+                            </div>
+                        `;
+                    });
+                }
+                // Digital bill style cost breakdown
+                const billDiv = document.getElementById('costs-bill');
+                if (billDiv) {
+                    let total = 0;
+                    let billHtml = `<div style='font-weight:bold;font-size:1.2rem;text-align:center;margin-bottom:8px;'>BILL OF MATERIALS</div>`;
+                    billHtml += `<table style="width:100%;font-size:1rem;margin-top:8px;margin-bottom:8px;border-collapse:collapse;">`;
+                    data.items.forEach(item => {
+                        total += Number(item.cost) || 0;
+                        billHtml += `<tr><td>${item.name}${item.link ? ` <a href='${item.link}' target='_blank' style='color:#14b8a6;text-decoration:underline;font-size:0.95em;'>[link]</a>` : ''}</td><td style='text-align:right;'>₹${item.cost}</td></tr>`;
+                    });
+                    if (data.extraCost && Array.isArray(data.extraCost)) {
+                        billHtml += `<tr><td colspan='2'><hr style='border:none;border-top:1px dashed #14b8a6;'></td></tr>`;
+                        data.extraCost.forEach(extra => {
+                            billHtml += `<tr><td>${extra.name}</td><td style='text-align:right;'>₹${extra.cost}</td></tr>`;
+                            total += Number(extra.cost) || 0;
+                        });
+                    }
+                    billHtml += `<tr><td colspan='2'><hr style='border:none;border-top:2px solid #14b8a6;'></td></tr>`;
+                    billHtml += `<tr style='font-weight:bold;'><td>Total</td><td style='text-align:right;'>₹${total}</td></tr>`;
+                    if (data["Final Sidekick Cost"])
+                        billHtml += `<tr style='color:#14b8a6;'><td>Final Sidekick Cost</td><td style='text-align:right;'>₹${data["Final Sidekick Cost"]}</td></tr>`;
+                    if (data["Final Sidekick Cost(Excl GST, Shipping)"])
+                        billHtml += `<tr style='color:#14b8a6;'><td>Final Cost (Excl GST, Shipping)</td><td style='text-align:right;'>₹${data["Final Sidekick Cost(Excl GST, Shipping)"]}</td></tr>`;
+                    billHtml += '</table>';
+                    billDiv.innerHTML = billHtml;
+                }
+            });
+
+            // Load preorders.json and show stats
+            fetch('preorders.json').then(r => r.json()).then(data => {
+                const availabilitySection = document.querySelector('.availability-section');
+                if (availabilitySection) {
+                    const statsDiv = document.createElement('div');
+                    statsDiv.style.margin = '32px 0 0 0';
+                    statsDiv.style.textAlign = 'center';
+                    statsDiv.style.fontSize = '1.2rem';
+                    statsDiv.innerHTML = `<strong>${data.preorders} Preorders, ${data.backers} Backers So Far! What are you waiting for?</strong>`;
+                    availabilitySection.appendChild(statsDiv);
+                }
+            });
 
             /* ---------- Fallback helpers ---------- */
             function showFallback() {
@@ -705,6 +794,22 @@
                 fallbackMsg.classList.remove('show');
                 fallbackMsg.style.opacity = '0';
                 fallbackMsg.style.display = 'none';
+            }
+
+            /* ---------- Love section video scaling & fallback ---------- */
+            const loveVideo = document.getElementById('love-video');
+            if (loveVideo) {
+                // Set a default video source (replace with your video URL)
+                loveVideo.src = 'https://cdn.jsdelivr.net/gh/meetsidekick/pcb@main/assets/video/sidekick-love-bg.mp4';
+                // Hide video if it fails to load
+                loveVideo.onerror = function() {
+                    loveVideo.style.opacity = '0';
+                    loveVideo.style.pointerEvents = 'none';
+                };
+                // Show video if it loads
+                loveVideo.oncanplay = function() {
+                    loveVideo.style.opacity = '1';
+                };
             }
 
             /* ---------- Model-viewer handling ---------- */
