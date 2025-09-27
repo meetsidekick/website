@@ -200,20 +200,6 @@
             z-index: 2;
         }
 
-        .section-title-bg {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            height: 120%;
-            background: rgba(255,255,255,0.18); /* Lowered opacity for less washout */
-            border-radius: var(--radius-lg);
-            z-index: 1;
-            box-shadow: 0 4px 32px rgba(0,0,0,0.08);
-            pointer-events: none;
-        }
-
         #love-section {
             position: relative;
             overflow: hidden;
@@ -829,7 +815,6 @@
         </div>
         <div class="love-overlay">
             <div class="love-content">
-                <div class="section-title-bg"></div>
                 <div class="love-title-card"><h2 class="section-title" style="margin:0;">Why You'll Love Sidekick</h2></div>
                 <div class="features-grid">
                     <div class="feature-card">
@@ -1021,7 +1006,7 @@
             const loveVideo = document.getElementById('love-video');
             if (loveVideo) {
                 // Set a default video source (replace with your video URL)
-                loveVideo.src = 'https://cdn.jsdelivr.net/gh/meetsidekick/pcb@main/assets/video/sidekick-love-bg.mp4';
+                loveVideo.src = '/assets/sidekick-love-bg.mp4';
                 // Hide video if it fails to load
                 loveVideo.onerror = function() {
                     loveVideo.style.opacity = '0';
