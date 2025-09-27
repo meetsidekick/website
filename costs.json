@@ -33,7 +33,7 @@
     },
     {
       "name": "Diode",
-      "desc": "SM4007PL Schottky Diode",
+      "desc": "SM4007PL Diode",
       "cost": 1,
       "link": "https://robu.in/product/sm4007pl-a7-slkor-1a-1kv-1-1v1a-sod-123fl-diodes-general-purpose-rohs/"
     },
@@ -51,7 +51,7 @@
     },
     {
       "name": "PCB",
-      "desc": "By LionCircuits, roughly 1200 for 10 pcs",
+      "desc": "By LionCircuits, roughly 1200 for 10 PCBs",
       "cost": 120,
       "link": "https://github.com/meetsidekick/pcb/"
     },
