@@ -887,21 +887,23 @@
                     <span class="card-status">Coming Soon</span>
                 </div>
                 <div class="availability-card">
-                    <h3 class="card-title">Sidekick Kits</h3>
+                    <h3 class="card-title">Assemble-Your-Own Sidekick Kits</h3>
                     <p class="card-description">WIP / Planned</p>
                     <span class="card-status">WIP</span>
                 </div>
                 <div class="availability-card featured">
                     <div class="featured-card-copy">
                         <h3 class="card-title">Engineer Your Own</h3>
-                        <p class="card-description">Guide Coming Soon</p>
-                        <span class="card-status" style="display: false;">DIY HERO MODE</span>
+                        <p class="card-description">Guide and Documentation Coming Soon</p>
+                        <span class="card-status"  style="display:none;">DIY HERO MODE</span>
                     </div>
                     <span class="card-cta">Coming Soon</span>
                 </div>
             </div>
         </div>
     </section>
+
+    <hr>
 
     <!-- Team Section -->
     <section class="team-section">
@@ -993,7 +995,7 @@
                     statsDiv.style.margin = '32px 0 0 0';
                     statsDiv.style.textAlign = 'center';
                     statsDiv.style.fontSize = '1.2rem';
-                    statsDiv.innerHTML = `<strong>${data.preorders} Preorders, ${data.backers} Backers So Far! What are you waiting for?</strong>`;
+                    statsDiv.innerHTML = `<strong>${data.preorders} Preorders with ${data.backers} Backers already! What are you waiting for?</strong>`;
                     availabilitySection.appendChild(statsDiv);
                 }
             });
