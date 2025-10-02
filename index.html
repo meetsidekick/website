@@ -81,7 +81,19 @@
                 <p class="text-lg md:text-xl text-gray-400 max-w-2xl mt-4">An open-source, handheld companion that grows with you. Explore, create, and connect.</p>
             </div>
             <div class="md:w-1/2 w-full">
-                <model-viewer src="https://cdn.glitch.com/36cb8393-65c6-408d-a53A-065c43663456/sidekick.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="https://cdn.glitch.com/36cb8393-65c6-408d-a53A-065c43663456%2Fposter.webp?v=161998852 poster.webp" shadow-intensity="1" autoplay exposure="1.5" camera-orbit="0deg 75deg 105%">
+                <model-viewer
+                    id="sidekick-model"
+                    src="https://cdn.jsdelivr.net/gh/meetsidekick/website@redo-new/assets/SideKickV2.glb"
+                    alt="SIDEKICK PCB 3D Model"
+                    auto-rotate
+                    camera-controls
+                    touch-action="pan-y"
+                    loading="eager"
+                    reveal="auto"
+                    environment-image="neutral"
+                    shadow-intensity="0"
+                    camera-orbit="-449.8deg 180deg 193.9m" 
+                    field-of-view="30deg">
                 </model-viewer>
             </div>
         </div>
