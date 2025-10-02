@@ -33,6 +33,9 @@
         }
     </script>
     <style>
+        :root {
+            --accent-color: #9f55ff;
+        }
         body {
             font-family: 'Space Mono', monospace;
             background-color: #000;
@@ -64,6 +67,7 @@
         <div class="hidden md:flex items-center space-x-8">
             <a href="#features" class="hover:text-accent transition-colors">Features</a>
             <a href="#costs" class="hover:text-accent transition-colors">Pricing</a>
+            <a href="https://engineering.meetsidekick.tech" target="_blank" class="hover:text-accent transition-colors">Docs (WIP)</a>
         </div>
         <a href="#preorder" class="bg-accent text-black font-bold py-2 px-6 rounded-xl hover:bg-white transition-colors">Pre-Order</a>
     </nav>
@@ -74,7 +78,7 @@
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
             <div class="md:w-1/2 text-left">
                 <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight">Your Hackable Digital Pet</h1>
-                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mt-4">An open-source, AI-powered companion that grows with you. Explore, create, and connect.</p>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mt-4">An open-source, handheld companion that grows with you. Explore, create, and connect.</p>
             </div>
             <div class="md:w-1/2 w-full">
                 <model-viewer src="https://cdn.glitch.com/36cb8393-65c6-408d-a53A-065c43663456/sidekick.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="https://cdn.glitch.com/36cb8393-65c6-408d-a53A-065c43663456%2Fposter.webp?v=161998852 poster.webp" shadow-intensity="1" autoplay exposure="1.5" camera-orbit="0deg 75deg 105%">
@@ -125,13 +129,15 @@
                 .then(response => response.json())
                 .then(data => {
                     const featuresGrid = document.getElementById('features-grid');
-                    const featuresHtml = data.map(feature => `
-                        <div class="bg-gray-900 p-8 rounded-xl border border-gray-800 transform hover:scale-105 hover:border-accent transition-all duration-300">
-                            ${feature.icon}
+                    const featuresHtml = data.map(feature => {
+                        const iconUrl = `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/${feature.icon}.svg`;
+                        return `
+                        <div class="bg-gray-900 p-8 rounded-xl border border-gray-800 transform hover:scale-105 hover:border-accent transition-all duration-300 flex flex-col items-center text-center">
+                            <div class="w-12 h-12 mb-4 flex items-center justify-center" style="background-color: var(--accent-color); -webkit-mask: url(${iconUrl}) no-repeat center; mask: url(${iconUrl}) no-repeat center;"></div>
                             <h3 class="text-2xl font-bold mb-2">${feature.title}</h3>
                             <p class="text-gray-400">${feature.description}</p>
                         </div>
-                    `).join('');
+                    `}).join('');
                     featuresGrid.innerHTML = featuresHtml;
                 });
 
