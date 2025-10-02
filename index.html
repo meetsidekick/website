@@ -4,1109 +4,186 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIDEKICK - Your Hackable Digital Pet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['"Space Mono"', 'monospace'],
+                    },
+                    colors: {
+                        'accent': '#9f55ff', // Vibrant Purple
+                        'primary': '#000000', // Black
+                        'secondary': '#1a1a1a', // Dark Gray
+                        'light': '#ffffff', // White
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px 0 rgba(159, 85, 255, 0.8)',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --color-black: #000000;
-            --color-white: #ffffff;
-            --color-gray-100: #f5f5f5;
-            --color-gray-300: #a7a9a9;
-            --color-gray-700: #374151;
-            --color-teal-500: #14b8a6;
-            --color-teal-600: #0d9488;
-            --space-8: 8px;
-            --space-12: 12px;
-            --space-16: 16px;
-            --space-24: 24px;
-            --space-32: 32px;
-            --space-48: 48px;
-            --space-64: 64px;
-            --radius-lg: 6px;
-            --radius-button: 9px;
-            --radius-chip: 8px;
-            --font-mono: 'Space Mono', monospace;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-            padding: 0 0 60px 0; /* Add bottom padding for fixed footer */
-            font-family: var(--font-mono);
-            background-color: var(--color-white);
-            color: var(--color-black);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .hero-section {
-            background: var(--color-black);
-            color: var(--color-white);
-            padding: var(--space-64) var(--space-32);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 100vh;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-64);
-            align-items: center;
-        }
-
-        .hero-text {
-            text-align: left;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
-            margin: 0 0 var(--space-24) 0;
-            letter-spacing: -0.02em;
-            line-height: 0.9;
-            text-transform: uppercase;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin: 0 0 var(--space-32) 0;
-            opacity: 0.9;
-            color: var(--color-teal-500);
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin: 0 0 var(--space-32) 0;
-            opacity: 0.85;
-        }
-
-        .status-badges {
-            display: flex;
-            gap: var(--space-16);
-            flex-wrap: wrap;
-            align-items: stretch;
-            justify-content: flex-start;
-        }
-
-        .preorder-btn {
-            background: var(--color-teal-500);
-            color: var(--color-white);
-            padding: clamp(0.75rem, 1vw + 0.5rem, 1.1rem) clamp(1.6rem, 2vw + 0.5rem, 2.6rem);
-            border-radius: var(--radius-button);
-            font-size: clamp(0.85rem, 1vw + 0.6rem, 1.1rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-            transition: all 0.25s ease;
-            box-shadow: 0 14px 30px rgba(20, 184, 166, 0.25);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .preorder-btn:hover {
-            background: var(--color-teal-600);
-            transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 18px 36px rgba(20, 184, 166, 0.32);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(20,184,166,0.13);
-            border: 2px solid var(--color-teal-500);
-            color: var(--color-teal-600);
-            padding: clamp(0.65rem, 1vw, 0.85rem) clamp(1.2rem, 1.6vw, 1.8rem);
-            border-radius: var(--radius-chip);
-            font-size: clamp(0.8rem, 0.6vw + 0.7rem, 0.95rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            box-shadow: 0 2px 12px rgba(20,184,166,0.08);
-            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .status-badge:hover {
-            background: var(--color-teal-500);
+            font-family: 'Space Mono', monospace;
+            background-color: #000;
             color: #fff;
-            box-shadow: 0 4px 24px rgba(20,184,166,0.18);
         }
-
-        .hero-model {
-            position: relative;
-            height: 500px;
-            background: var(--color-white);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-        }
-
         model-viewer {
             width: 100%;
-            height: 100%;
-            background-color: var(--color-white);
-            border-radius: var(--radius-lg);
+            height: 500px;
+            border-radius: 1rem;
+            border: 2px solid #9f55ff;
+            box-shadow: 0 0 20px 0 rgba(159, 85, 255, 0.5);
         }
-
-        .fallback-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: var(--color-black);
-            background: var(--color-white);
-            padding: var(--space-32);
-            border-radius: var(--radius-lg);
-            max-width: 300px;
-            display: none;
-        }
-
-        .fallback-message.show {
-            display: block;
-        }
-
-        .content-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--space-64) var(--space-32);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin: 0 0 var(--space-64) 0;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            position: relative;
-            z-index: 2;
-        }
-
-        #love-section {
-            position: relative;
-            overflow: hidden;
-            margin: 0 calc(-1 * var(--space-32));
-            padding: 0;
-        }
-
-        .love-video-wrapper {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        #love-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.7);
-            background: #000;
-            transition: opacity 0.3s;
-        }
-
-        .love-overlay {
-            position: relative;
-            z-index: 1;
-            background: linear-gradient(180deg, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.85) 100%);
-            padding: clamp(var(--space-48), 6vw, var(--space-64)) 0;
-        }
-
-        .love-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-32);
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: var(--space-32);
-            box-sizing: border-box;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-32);
-            margin-bottom: var(--space-64);
-            position: relative;
-            width: 100%;
-            box-sizing: border-box;
-            overflow-x: hidden;
-            justify-items: stretch;
-            align-items: stretch;
-        }
-
-        .feature-card {
-            background: rgba(255,255,255,0.92);
-            border-radius: 16px;
-            padding: clamp(var(--space-24), 4vw, var(--space-32));
-            border-left: 4px solid var(--color-teal-500);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-sizing: border-box;
-            overflow-wrap: break-word;
-            word-break: break-word;
-            min-width: 0;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Card-like background for love section title */
-        .love-title-card {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(255,255,255,0.65);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            padding: 18px 48px 16px 48px;
-            align-self: flex-start;
-            position: relative;
-            z-index: 3;
-        }
-
-        .love-title-card .section-title {
-            margin: 0;
-            text-align: left;
-        }
-
-        .feature-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 0 0 var(--space-16) 0;
-            color: var(--color-teal-600);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .feature-description {
-            font-size: 1rem;
-            line-height: 1.7;
-            margin: 0;
-            opacity: 0.9;
-        }
-
-        .specs-section {
-            background: var(--color-black);
-            color: var(--color-white);
-            margin: 0 calc(-1 * var(--space-32)) var(--space-64);
-            padding: calc(var(--space-64) * 1.25) var(--space-32) var(--space-64);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .specs-section::before {
-            content: "";
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: clamp(240px, 40vw, 560px);
-            height: 140px;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .specs-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .specs-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin: 0 0 var(--space-16) 0;
-            text-transform: uppercase;
-            color: var(--color-teal-500);
-        }
-
-        .specs-subtitle {
-            text-align: center;
-            font-size: 1.1rem;
-            opacity: 0.8;
-            margin: 0 0 var(--space-48) 0;
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-24);
-        }
-
-        .spec-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-lg);
-            padding: var(--space-24);
-            transition: background-color 0.2s ease;
-        }
-
-        .spec-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .spec-name {
-            font-weight: 700;
-            color: var(--color-teal-500);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 0 0 var(--space-8) 0;
-        }
-
-        .spec-value {
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        .availability-section {
-            text-align: center;
-            margin: var(--space-64) 0;
-        }
-
-        .availability-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 0 0 var(--space-32) 0;
-            text-transform: uppercase;
-        }
-
-        .availability-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: clamp(var(--space-24), 4vw, var(--space-48));
-            max-width: 1100px;
-            margin: 0 auto;
-            align-items: stretch;
-            grid-auto-rows: 1fr;
-        }
-
-        .availability-card {
-            background: var(--color-gray-100);
-            border-radius: 14px;
-            padding: clamp(var(--space-24), 3vw, var(--space-48));
-            border: 2px solid transparent;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-16);
-        }
-
-        .availability-card.featured {
-            border-color: var(--color-teal-500);
-            background: var(--color-black);
-            color: var(--color-white);
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            gap: var(--space-24);
-            box-shadow: 0 24px 48px rgba(20,184,166,0.35);
-            flex-wrap: wrap;
-        }
-
-        .availability-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 56px rgba(0, 0, 0, 0.2);
-            border-color: rgba(20,184,166,0.45);
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 0 var(--space-16) 0;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .card-description {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin: 0 0 var(--space-24) 0;
-            opacity: 0.9;
-        }
-
-        .card-status {
-            background: var(--color-teal-500);
-            color: var(--color-white);
-            padding: clamp(0.55rem, 0.5vw + 0.5rem, 0.85rem) clamp(1.1rem, 1vw + 1rem, 1.6rem);
-            border-radius: var(--radius-chip);
-            font-size: clamp(0.8rem, 0.3vw + 0.75rem, 0.95rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            display: inline-block;
-        }
-
-        .featured-card-copy {
-            flex: 1;
-            text-align: left;
-        }
-
-        .card-cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: clamp(0.6rem, 0.8vw, 0.85rem) clamp(1.2rem, 1.6vw, 1.8rem);
-            border-radius: var(--radius-button);
-            font-size: clamp(0.8rem, 0.7vw + 0.7rem, 0.95rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            border: 1px solid rgba(255,255,255,0.35);
-            background: rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.9);
-            pointer-events: none;
-        }
-
-        .team-cta-wrapper {
-            margin-top: var(--space-32);
-            display: flex;
-            justify-content: flex-start;
-            gap: var(--space-16);
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .team-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-8);
-            padding: clamp(0.7rem, 0.8vw, 1rem) clamp(1.6rem, 2vw, 2.6rem);
-            border-radius: var(--radius-button);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            border: 1px solid rgba(0,0,0,0.1);
-            background: var(--color-white);
-            color: var(--color-black);
-            text-decoration: none;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .team-cta:hover {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 18px 44px rgba(0,0,0,0.18);
-        }
-
-        .team-cta.secondary {
-            background: var(--color-black);
-            color: var(--color-white);
-            border-color: rgba(255,255,255,0.2);
-        }
-
-        .team-separator {
-            font-size: 1.5rem;
-            opacity: 0.5;
-        }
-
-        .team-section {
-            background: var(--color-gray-100);
-            padding: var(--space-48) var(--space-32);
-            margin: var(--space-64) calc(-1 * var(--space-32));
-            text-align: left;
-        }
-
-        .team-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .team-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 0 var(--space-24) 0;
-            text-transform: uppercase;
-            text-align: left;
-        }
-
-        .team-description {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin: 0 0 var(--space-24) 0;
-            text-align: left;
-        }
-
-        .team-credits {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            font-style: italic;
-        }
-
-        .team-credits a {
-            color: var(--color-teal-600);
-            text-decoration: none;
-        }
-
-        .team-credits a:hover {
-            text-decoration: underline;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: var(--space-16) var(--space-32);
-            z-index: 1000;
-            pointer-events: none;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            pointer-events: auto;
-            font-size: 0.8rem;
-        }
-
-        .footer-disclaimer {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.75rem;
-            max-width: 60%;
-            line-height: 1.4;
-        }
-
-        .footer-disclaimer a {
-            color: var(--color-teal-500);
-            text-decoration: none;
-            opacity: 0.9;
-        }
-
-        .footer-disclaimer a:hover {
-            text-decoration: underline;
-            opacity: 1;
-        }
-
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-8);
-            color: var(--color-white);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: var(--space-8) var(--space-16);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-lg);
-            transition: all 0.3s ease;
-            pointer-events: auto;
-        }
-
-        .github-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--color-white);
-            transform: translateY(-1px);
-        }
-
-        .github-arrow {
-            transition: transform 0.3s ease;
-        }
-
-        .github-link:hover .github-arrow {
-            transform: translateX(4px);
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding-bottom: 80px; /* Increased for mobile footer height */
-            }
-
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: var(--space-32);
-            }
-
-            .hero-text {
-                text-align: center;
-            }
-
-            .hero-model {
-                height: 300px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .specs-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .availability-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .status-badges {
-                justify-content: center;
-            }
-
-            .specs-section,
-            .team-section {
-                margin-left: -20px;
-                margin-right: -20px;
-            }
-
-            #love-section {
-                margin: 0 -20px;
-            }
-
-            .love-content {
-                padding: 0 var(--space-24);
-                gap: var(--space-24);
-            }
-
-            .availability-card.featured {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .card-cta {
-                width: 100%;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: var(--space-12);
-                text-align: center;
-            }
-
-            .team-cta-wrapper {
-                justify-content: center;
-            }
-
-            .footer-disclaimer {
-                max-width: 100%;
-                order: 2;
-            }
-
-            .github-link {
-                order: 1;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .content-section {
-                padding: var(--space-32) var(--space-16);
-            }
-
-            .hero-section {
-                padding: var(--space-48) var(--space-16);
-            }
-
-            .specs-section,
-            .team-section {
-                padding-left: var(--space-16);
-                padding-right: var(--space-16);
-            }
-
-            .team-cta-wrapper {
-                flex-direction: column;
-                gap: var(--space-12);
-                align-items: stretch;
-                justify-content: center;
-            }
-
-            .team-cta {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .team-separator {
-                display: none;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .availability-card.featured {
-                padding-right: clamp(2.4rem, 5vw, 3.8rem);
-            }
-
-            .team-cta-wrapper {
-                justify-content: flex-start;
-            }
+        .bg-grid-gray-900\/50 {
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col bg-black text-white">
+
+    <!-- Preorder Status -->
+    <div id="preorder-status" class="bg-accent text-black text-center py-2 font-bold text-sm">
+        <!-- Preorder data will be injected here by JavaScript -->
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 w-full px-4 sm:px-8 py-3 flex justify-between items-center z-50 bg-black/50 backdrop-blur-md border-b border-gray-800">
+        <a href="/" class="text-2xl font-bold tracking-tighter">SIDEKICK</a>
+        <div class="hidden md:flex items-center space-x-8">
+            <a href="#features" class="hover:text-accent transition-colors">Features</a>
+            <a href="#costs" class="hover:text-accent transition-colors">Pricing</a>
+        </div>
+        <a href="#preorder" class="bg-accent text-black font-bold py-2 px-6 rounded-xl hover:bg-white transition-colors">Pre-Order</a>
+    </nav>
+
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">SIDEKICK</h1>
-                <p class="hero-subtitle">Your Hackable Digital Pet</p>
-                <p class="hero-description">
-                    Meet Sidekick, the Tamagotchi-inspired digital companion that brings personality and endless hackability to your workspace. More than a gadget, it's a platform for your creativity!
-                </p>
-                <div class="status-badges">
-                    <a href="#" class="preorder-btn">Pre-orders opening soon</a>
-                    <a href="https://engineering.meetsidekick.tech/docs/reference/open-source/" class="status-badge">Open Source... How?</a>
-                </div>
+    <header class="h-screen flex flex-col justify-center items-center text-center pt-16 relative overflow-hidden px-4 -mt-16">
+        <div class="absolute inset-0 bg-grid-gray-900/50 [mask-image:linear-gradient(to_bottom,white_5%,transparent_95%)]"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2 text-left">
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight">Your Hackable Digital Pet</h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mt-4">An open-source, AI-powered companion that grows with you. Explore, create, and connect.</p>
             </div>
-            <div class="hero-model">
-                <model-viewer
-                    id="sidekick-model"
-                    src="https://cdn.jsdelivr.net/gh/meetsidekick/website@redo-new/assets/SideKickV2.glb"
-                    alt="SIDEKICK PCB 3D Model"
-                    auto-rotate
-                    camera-controls
-                    touch-action="pan-y"
-                    loading="eager"
-                    reveal="auto"
-                    environment-image="neutral"
-                    shadow-intensity="0"
-                    camera-orbit="78.91deg 66.94deg 0.1797m" 
-                    field-of-view="30deg">
+            <div class="md:w-1/2 w-full">
+                <model-viewer src="https://cdn.glitch.com/36cb8393-65c6-408d-a53A-065c43663456/sidekick.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="https://cdn.glitch.com/36cb8393-65c6-408d-a53A-065c43663456%2Fposter.webp?v=161998852 poster.webp" shadow-intensity="1" autoplay exposure="1.5" camera-orbit="0deg 75deg 105%">
                 </model-viewer>
-                <div class="fallback-message" id="fallback">
-                    <p>We wanted to show the sidekick here but it didn't quite work out!</p>
-                    <br>
-                    <p>:(</p>
-                    <br>
-                    <p>If you are using a privacy-focused browser, please enable WebGL and JavaScript! Try reloading...?</p>
-                </div>
             </div>
         </div>
-    </section>
+    </header>
 
     <!-- Features Section -->
-    <section id="love-section">
-        <div class="love-video-wrapper">
-            <video autoplay muted loop playsinline id="love-video" poster=""></video>
-        </div>
-        <div class="love-overlay">
-            <div class="love-content">
-                <div class="love-title-card"><h2 class="section-title" style="margin:0;">Why You'll Love Sidekick</h2></div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3 class="feature-title">A Companion with Character</h3>
-                        <p class="feature-description">
-                            Watch your Sidekick react to motion and touch, displaying its "mood" on a vibrant OLED screen. Every interaction is unique, bringing life to your workspace.
-                        </p>
-                    </div>
-                    <div class="feature-card">
-                        <h3 class="feature-title">Infinitely Customizable</h3>
-                        <p class="feature-description">
-                            Dive into its open-source hardware and software. Install custom firmware, add new features, and program unique behaviors. Your Sidekick, your rules.
-                        </p>
-                    </div>
-                    <div class="feature-card">
-                        <h3 class="feature-title">Connected & Smart</h3>
-                        <p class="feature-description">
-                            Built with an ESP32, Sidekick boasts Wi-Fi and Bluetooth, opening up a world of possibilities for smart integrations and creative projects.
-                        </p>
-                    </div>
-                    <div class="feature-card">
-                        <h3 class="feature-title">Portable Fun</h3>
-                        <p class="feature-description">
-                            Designed to be carried with you, Sidekick is ready to bring a smile wherever you go. Compact, durable, and always entertaining.
-                        </p>
-                    </div>
-                </div>
-            </div>
+    <section id="features" class="py-24 px-4 sm:px-8">
+        <h2 class="text-4xl font-bold text-center mb-12 tracking-tighter">What makes Sidekick special?</h2>
+        <div id="features-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Feature cards will be injected here -->
         </div>
     </section>
 
-    <!-- Specifications Section -->
-    <section class="specs-section">
-        <div class="specs-content">
-            <h2 class="specs-title">For The Nerds</h2>
-            <p class="specs-subtitle">(We love you). Here's what powers the SIDEKICK.</p>
-            <div class="specs-grid" id="specs-grid"></div>
-            <div style="margin-top:32px;max-width:400px;margin-left:auto;margin-right:auto;">
-                <div id="costs-bill" style="background:rgba(0,0,0,0.85);border-radius:16px;padding:24px 16px;text-align:left;font-family:var(--font-mono);box-shadow:0 2px 16px rgba(0,0,0,0.10);border:2px dashed #14b8a6;position:relative;overflow:hidden;color:#fff;">
-                    <div style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0.08;background:url('data:image/svg+xml;utf8,<svg width=\'100%\' height=\'100%\' xmlns=\'http://www.w3.org/2000/svg\'><text x=\'10\' y=\'40\' font-size=\'32\' fill=\'#14b8a6\' font-family=\'monospace\'>BILL</text></svg>') repeat;"></div>
-                    <!-- Bill will be loaded here -->
-                </div>
-            </div>
+    <!-- Cost Breakdown Section -->
+    <section id="costs" class="py-24 px-4 sm:px-8 bg-gray-900">
+        <h2 class="text-4xl font-bold text-center mb-12 tracking-tighter">Transparent Pricing</h2>
+        <div id="cost-breakdown" class="max-w-4xl mx-auto">
+            <!-- Cost data will be injected here -->
         </div>
     </section>
 
-    <!-- Availability Section -->
-    <section class="content-section">
-        <div class="availability-section">
-            <h2 class="availability-title">Choose Your Adventure</h2>
-            <div class="availability-cards">
-                <div class="availability-card">
-                    <h3 class="card-title">Buy Preassembled Sidekick</h3>
-                    <p class="card-description">Pre-orders opening soon</p>
-                    <span class="card-status">Coming Soon</span>
-                </div>
-                <div class="availability-card">
-                    <h3 class="card-title">Assemble-Your-Own Sidekick Kits</h3>
-                    <p class="card-description">WIP / Planned</p>
-                    <span class="card-status">WIP</span>
-                </div>
-                <div class="availability-card featured">
-                    <div class="featured-card-copy">
-                        <h3 class="card-title">Engineer Your Own</h3>
-                        <p class="card-description">Guide and Documentation Coming Soon</p>
-                        <span class="card-status"  style="display:none;">DIY HERO MODE</span>
-                    </div>
-                    <span class="card-cta">Coming Soon</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <hr>
-
-    <!-- Team Section -->
-    <section class="team-section">
-        <div class="team-content">
-            <h2 class="team-title">From Team "Burn This Hardware"</h2>
-            <p class="team-description">
-                Join our growing community of hackers, makers, and digital pet enthusiasts. 
-                Every line of code, every component specification is available for you to explore, modify, and improve.
-            </p>
-            <div class="team-cta-wrapper">
-                <a class="team-cta" href="https://absurd.industries" target="_blank" rel="noopener">Join Absurd.Industries</a>
-                <span class="team-separator">🤝</span>
-                <a class="team-cta secondary" href="https://sounddrill31.github.io/tgl/" target="_blank" rel="noopener">Check out Tomorrow's Gadget Lab</a>
-            </div>
+    <!-- Pre-order Section -->
+    <section id="preorder" class="py-24 px-4 sm:px-8 bg-accent text-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4 tracking-tighter">Pre-order Your Sidekick</h2>
+            <p class="text-xl mb-8">Be among the first to own a Sidekick. Limited early bird pricing available.</p>
+            <button class="bg-black text-white font-bold py-4 px-10 rounded-xl text-lg hover:bg-gray-800 transition-colors">Pre-order Coming Soon</button>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-disclaimer">
-                <strong>Disclaimer:</strong> Sidekick is an independent open-source hardware project. Not affiliated with Sidekick Browser or any other 'Sidekick' products. 
-                Built with <a href="https://mono.layogtima.com/" target="_blank">MONO design system</a> • 
-                <a href="https://modelviewer.dev/" target="_blank">Model Viewer</a>
-            </div>
-            <a href="https://engineering.meetsidekick.tech/docs/reference/open-source/" target="_blank" rel="noopener noreferrer" class="github-link">
-                <span class="github-text">OPEN SOURCE... HOW?</span>
-                <span class="github-arrow">→</span>
+    <footer class="py-8 px-4 sm:px-8 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-gray-500 text-center sm:text-left">Disclaimer: Sidekick is an independent open-source hardware project. <br>Not affiliated with Sidekick Browser or any other 'Sidekick' products</p>
+            <a href="https://engineering.meetsidekick.tech/docs/reference/open-source/" target="_blank" rel="noopener noreferrer" class="bg-gray-800 text-white font-bold py-2 px-6 rounded-xl hover:bg-accent hover:text-black transition-colors text-sm">
+                Open Source
             </a>
         </div>
     </footer>
 
     <script>
-        /* SIDEKICK v0 — JavaScript functionality
-           (text-load animations + model-load fallback handling) */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch and display features
+            fetch('features.json')
+                .then(response => response.json())
+                .then(data => {
+                    const featuresGrid = document.getElementById('features-grid');
+                    const featuresHtml = data.map(feature => `
+                        <div class="bg-gray-900 p-8 rounded-xl border border-gray-800 transform hover:scale-105 hover:border-accent transition-all duration-300">
+                            ${feature.icon}
+                            <h3 class="text-2xl font-bold mb-2">${feature.title}</h3>
+                            <p class="text-gray-400">${feature.description}</p>
+                        </div>
+                    `).join('');
+                    featuresGrid.innerHTML = featuresHtml;
+                });
 
-    document.addEventListener('DOMContentLoaded', () => {
-            const modelViewer = document.getElementById('sidekick-model');
-            const fallbackMsg = document.getElementById('fallback');
-            let modelTimeout;
+            // Fetch and display preorders
+            fetch('preorders.json')
+                .then(response => response.json())
+                .then(data => {
+                    const preorderStatus = document.getElementById('preorder-status');
+                    preorderStatus.innerHTML = `<p>${data.preorders} pre-orders from ${data.backers} backers! Join them!</p>`;
+                });
 
-            // Load costs.json and update nerds section
-            fetch('costs.json').then(r => r.json()).then(data => {
-                const specsGrid = document.getElementById('specs-grid');
-                if (specsGrid) {
-                    specsGrid.innerHTML = '';
-                    data.items.forEach(item => {
-                        specsGrid.innerHTML += `
-                            <div class="spec-item">
-                                <h4 class="spec-name">${item.name}</h4>
-                                <p class="spec-value">${item.desc}${item.link ? ` <a href='${item.link}' target='_blank' style='color:#14b8a6;text-decoration:underline;'>[Buy]</a>` : ''}</p>
-                            </div>
+            // Fetch and display costs
+            fetch('costs.json')
+                .then(response => response.json())
+                .then(data => {
+                    const costBreakdown = document.getElementById('cost-breakdown');
+                    let totalCost = 0;
+                    const itemsHtml = data.items.map(item => {
+                        totalCost += item.cost;
+                        return `
+                        <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                            <p class="text-gray-300">${item.name} <span class="text-xs text-gray-500">${item.desc}</span></p>
+                            <p class="font-mono text-gray-300">${data.currency} ${item.cost.toFixed(2)}</p>
+                        </div>
                         `;
-                    });
-                }
-                // Digital bill style cost breakdown
-                const billDiv = document.getElementById('costs-bill');
-                if (billDiv) {
-                    let total = 0;
-                    let billHtml = `<div style='font-weight:bold;font-size:1.2rem;text-align:center;margin-bottom:8px;'>BILL OF MATERIALS</div>`;
-                    billHtml += `<table style="width:100%;font-size:1rem;margin-top:8px;margin-bottom:8px;border-collapse:collapse;">`;
-                    data.items.forEach(item => {
-                        total += Number(item.cost) || 0;
-                        billHtml += `<tr><td>${item.name}${item.link ? ` <a href='${item.link}' target='_blank' style='color:#14b8a6;text-decoration:underline;font-size:0.95em;'>[link]</a>` : ''}</td><td style='text-align:right;'>₹${item.cost}</td></tr>`;
-                    });
-                    if (data.extraCost && Array.isArray(data.extraCost)) {
-                        billHtml += `<tr><td colspan='2'><hr style='border:none;border-top:1px dashed #14b8a6;'></td></tr>`;
-                        data.extraCost.forEach(extra => {
-                            billHtml += `<tr><td>${extra.name}</td><td style='text-align:right;'>₹${extra.cost}</td></tr>`;
-                            total += Number(extra.cost) || 0;
-                        });
-                    }
-                    billHtml += `<tr><td colspan='2'><hr style='border:none;border-top:2px solid #14b8a6;'></td></tr>`;
-                    billHtml += `<tr style='font-weight:bold;'><td>Total</td><td style='text-align:right;'>₹${total}</td></tr>`;
-                    if (data["Final Sidekick Cost"])
-                        billHtml += `<tr style='color:#14b8a6;'><td>Final Sidekick Cost</td><td style='text-align:right;'>₹${data["Final Sidekick Cost"]}</td></tr>`;
-                    if (data["Final Sidekick Cost(Excl GST, Shipping)"])
-                        billHtml += `<tr style='color:#14b8a6;'><td>Final Cost (Excl GST, Shipping)</td><td style='text-align:right;'>₹${data["Final Sidekick Cost(Excl GST, Shipping)"]}</td></tr>`;
-                    billHtml += '</table>';
-                    billDiv.innerHTML = billHtml;
-                }
-            });
+                    }).join('');
 
-            // Load preorders.json and show stats
-            fetch('preorders.json').then(r => r.json()).then(data => {
-                const availabilitySection = document.querySelector('.availability-section');
-                if (availabilitySection) {
-                    const statsDiv = document.createElement('div');
-                    statsDiv.style.margin = '32px 0 0 0';
-                    statsDiv.style.textAlign = 'center';
-                    statsDiv.style.fontSize = '1.2rem';
-                    statsDiv.innerHTML = `<strong>${data.preorders} Preorders with ${data.backers} Backers already! What are you waiting for?</strong>`;
-                    availabilitySection.appendChild(statsDiv);
-                }
-            });
+                    const extraCostsHtml = data.extraCost.map(item => {
+                        totalCost += item.cost;
+                        return `
+                        <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                            <p class="text-gray-300">${item.name}</p>
+                            <p class="font-mono text-gray-300">${data.currency} ${item.cost.toFixed(2)}</p>
+                        </div>
+                        `;
+                    }).join('');
 
-            /* ---------- Fallback helpers ---------- */
-            function showFallback() {
-                if (!fallbackMsg) return;
-                console.log('Showing fallback message');
-                fallbackMsg.classList.add('show');
-                fallbackMsg.style.opacity = '1';
-                fallbackMsg.style.display = 'block';
-                if (modelViewer) modelViewer.style.display = 'none';
-            }
+                    const finalCostHtml = `
+                        <div class="flex justify-between items-center pt-4 font-bold text-lg text-white">
+                            <p>Total Estimated Cost</p>
+                            <p class="font-mono">${data.currency} ${totalCost.toFixed(2)}</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 font-bold text-xl text-accent">
+                            <p>Final Price</p>
+                            <p class="font-mono">${data.currency} ${data['Final Sidekick Cost']}</p>
+                        </div>
+                    `;
 
-            function hideFallback() {
-                if (!fallbackMsg) return;
-                fallbackMsg.classList.remove('show');
-                fallbackMsg.style.opacity = '0';
-                fallbackMsg.style.display = 'none';
-            }
-
-            /* ---------- Love section video scaling & fallback ---------- */
-            const loveVideo = document.getElementById('love-video');
-            if (loveVideo) {
-                // Set a default video source (replace with your video URL)
-                loveVideo.src = 'https://cdn.jsdelivr.net/gh/meetsidekick/website@redo-new/assets/sidekick-love-bg.mp4';
-                // Hide video if it fails to load
-                loveVideo.onerror = function() {
-                    loveVideo.style.opacity = '0';
-                    loveVideo.style.pointerEvents = 'none';
-                };
-                // Show video if it loads
-                loveVideo.oncanplay = function() {
-                    loveVideo.style.opacity = '1';
-                };
-            }
-
-            /* ---------- Model-viewer handling ---------- */
-            if (modelViewer) {
-                fallbackMsg.style.display = 'none';
-
-                modelViewer.style.transition = 'none';
-                modelViewer.style.willChange = 'auto';
-                modelViewer.setAttribute('power-preference', 'low-power');
-                modelViewer.setAttribute('shadow-softness', '0');
-
-                modelTimeout = setTimeout(() => {
-                    if (!modelViewer.loaded) {
-                        console.warn('Model loading timeout after 8 s');
-                        showFallback();
-                    }
-                }, 8000);
-
-                modelViewer.addEventListener('load', () => {
-                    console.log('Model loaded successfully');
-                    clearTimeout(modelTimeout);
-                    fallbackMsg.classList.remove('show');
-                    modelViewer.style.display = 'block';
-                    modelViewer.style.transition = 'opacity 0.2s ease';
+                    costBreakdown.innerHTML = itemsHtml + extraCostsHtml + finalCostHtml;
                 });
-
-                modelViewer.addEventListener('error', e => {
-                    console.error('Model failed to load:', e.detail);
-                    clearTimeout(modelTimeout);
-                    showFallback();
-                });
-
-                /* Quick source validation */
-                const originalSrc = modelViewer.src;
-                setTimeout(() => {
-                    if (modelViewer.src !== originalSrc || !modelViewer.src) {
-                        console.warn('Model source became invalid');
-                        showFallback();
-                    }
-                }, 3000);
-
-                /* Improved camera-controls UX */
-                let cameraTimeout;
-                modelViewer.addEventListener('camera-change', () => {
-                    modelViewer.style.filter = 'none';
-                    modelViewer.style.cursor = 'grabbing';
-                    clearTimeout(cameraTimeout);
-                    cameraTimeout = setTimeout(() => {
-                        modelViewer.style.cursor = 'grab';
-                    }, 100);
-                });
-
-            } else {
-                console.error('Model viewer element not found');
-                showFallback();
-            }
-
-            /* ---------- Keyboard shortcuts ---------- */
-            function initKeyboardNavigation() {
-                document.addEventListener('keydown', e => {
-                    if (!modelViewer || !modelViewer.loaded) return;
-                    if (e.key === 'Escape') {
-                        modelViewer.cameraOrbit = '45deg 75deg 5m';
-                        modelViewer.fieldOfView = 'auto';
-                    }
-                    if (e.key === ' ' && e.target === document.body) {
-                        e.preventDefault();
-                        modelViewer.autoRotate = !modelViewer.autoRotate;
-                    }
-                });
-            }
-
-            initKeyboardNavigation();
-
-            // Console easter egg
-            console.log(`
-                ╔═══════════════════════════════════════╗
-                ║               SIDEKICK v0             ║
-                ║       Team "Burn this Hardware"       ║
-                ║                                       ║
-                ║   Press SPACE to toggle auto-rotate   ║
-                ║    Press ESC to reset camera view     ║
-                ║ GitHub link: github.com/meetsidekick  ║
-                ╚═══════════════════════════════════════╝
-            `);
-
-            window.addEventListener('load', () => {
-                document.body.classList.add('loaded');
-                console.log('SIDEKICK v0 application fully loaded');
-            });
         });
     </script>
+
 </body>
 </html>
