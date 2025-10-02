@@ -1,0 +1,32 @@
+[
+    {
+        "icon": "code-slash",
+        "title": "Fully Hackable",
+        "description": "Open-source hardware and software. Customize everything from its voice to its shell."
+    },
+    {
+        "icon": "heart-pulse",
+        "title": "Emotional Engine",
+        "description": "Responds to touch, sound, and light with expressive animations and sounds."
+    },
+    {
+        "icon": "wifi",
+        "title": "Connected Companion",
+        "description": "Connects to your devices and smart home via Wi-Fi and Bluetooth."
+    },
+    {
+        "icon": "shield-check",
+        "title": "Privacy First",
+        "description": "All processing happens on-device. Your data stays yours."
+    },
+    {
+        "icon": "joystick",
+        "title": "Endless Fun",
+        "description": "Play games, learn to code, or just hang out. Sidekick is always ready for an adventure."
+    },
+    {
+        "icon": "display",
+        "title": "Expressive Display",
+        "description": "A vibrant OLED screen brings Sidekick to life with animations, expressions, and useful information."
+    }
+]

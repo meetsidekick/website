@@ -1,0 +1,4 @@
+*.md
+mono/
+*.bak
+*.old

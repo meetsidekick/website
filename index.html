@@ -3,53 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIDEKICK v0</title>
+    <title>SIDEKICK - Your Hackable Digital Pet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['"Space Mono"', 'monospace'],
+                    },
+                    colors: {
+                        'accent': '#9f55ff', // Vibrant Purple
+                        'primary': '#000000', // Black
+                        'secondary': '#1a1a1a', // Dark Gray
+                        'light': '#ffffff', // White
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px 0 rgba(159, 85, 255, 0.8)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --accent-color: #9f55ff;
+        }
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: #000;
+            color: #fff;
+        }
+        model-viewer {
+            width: 100%;
+            height: 500px;
+            border-radius: 1rem;
+            border: 2px solid #9f55ff;
+            box-shadow: 0 0 20px 0 rgba(159, 85, 255, 0.5);
+        }
+        .bg-grid-gray-900\/50 {
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
 </head>
-<body>
-    <div class="main-container">
-        <!-- Left Content Section -->
-        <div class="content-section">
-            <div class="content-wrapper">
-                <h1 class="main-title">SIDEKICK v0</h1>
-                
-                <div class="status">
-                                    <div class="greetings">
-                    <p class="greeting">Hello World.</p>
-                    <p class="greeting">Greetings.</p>
-                    <p class="greeting">Namaskaram.</p>
-                </div>
-                <vr>
+<body class="min-h-screen flex flex-col bg-black text-white">
 
-                    <p class="disclaimer">Sidekick is an independent open-source hardware project. Not affiliated with Sidekick Browser or any other 'Sidekick' software or hardware products</p>
-                    <span class="status-text">Work in Progress</span>
-                    <span class="status-separator">•</span>
-                    <span class="status-text">Coming Soon</span>
+    <!-- Preorder Status -->
+    <div id="preorder-status" class="bg-accent text-black text-center py-2 font-bold text-sm">
+        <!-- Preorder data will be injected here by JavaScript -->
+    </div>
 
-                </div>
-
-                <div class="description-section">
-                    <p class="description">Open Source Digital Pet! The hardware companion for everyone.</p>
-                    <p class="description">This page will be replaced soon, but for now, we have a PCB preview screen.</p>
-                    <p class="team">- Team "Burn this Hardware"</p>
-					<a class="credits" href="https://mono.layogtima.com/" target="_blank">Built with MONO design system in mind</a>
-					</br>
-                    <a class="credits" href="https://modelviewer.dev/" target="_blank">Preview Built with Google's Model Viewer</a>
-                </div>
-            </br>
-            </div>
+    <!-- Navigation -->
+    <nav class="sticky top-0 w-full px-4 sm:px-8 py-3 flex justify-between items-center z-50 bg-black/50 backdrop-blur-md border-b border-gray-800">
+        <a href="/" class="text-2xl font-bold tracking-tighter">SIDEKICK</a>
+        <div class="hidden md:flex items-center space-x-8">
+            <a href="#features" class="hover:text-accent transition-colors">Features</a>
+            <a href="#costs" class="hover:text-accent transition-colors">Pricing</a>
+            <a href="https://engineering.meetsidekick.tech" target="_blank" class="hover:text-accent transition-colors">Docs (WIP)</a>
         </div>
-        
-        <!-- Right Model Viewer Section -->
-        <div class="model-section">
-            <div class="model-container">
+        <a href="#preorder" class="bg-accent text-black font-bold py-2 px-6 rounded-xl hover:bg-white transition-colors">Pre-Order</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="h-screen flex flex-col justify-center items-center text-center pt-16 relative overflow-hidden px-4 -mt-16">
+        <div class="absolute inset-0 bg-grid-gray-900/50 [mask-image:linear-gradient(to_bottom,white_5%,transparent_95%)]"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2 text-left">
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight">Your Hackable Digital Pet</h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mt-4">An open-source, handheld companion that grows with you. Explore, create, and connect.</p>
+            </div>
+            <div class="md:w-1/2 w-full">
                 <model-viewer
                     id="sidekick-model"
-                    src="https://cdn.jsdelivr.net/gh/meetsidekick/pcb@main/assets/3d/sidekick-min-gltfpack.glb"
+                    src="https://cdn.jsdelivr.net/gh/meetsidekick/website@redo-new/assets/SideKickV2.glb"
                     alt="SIDEKICK PCB 3D Model"
                     auto-rotate
                     camera-controls
@@ -58,43 +92,116 @@
                     reveal="auto"
                     environment-image="neutral"
                     shadow-intensity="0"
-                    camera-orbit="78.91deg 66.94deg 0.1797m" 
+                    camera-orbit="-449.8deg 180deg 193.9m" 
                     field-of-view="30deg">
-		<!--				<button class="hotspot" slot="hotspot-1" data-position="0.11803371233434905m 0.015751828064800022m 0.11742797349302309m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">Display(0.96 inch)</div>
-						</button><button class="hotspot" slot="hotspot-2" data-position="0.1518977138897478m 0.01360268155879998m 0.11086322274502718m" data-normal="0m 1m 0m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">PCBCUPID Glyph-C3</div>
-						</button><button class="hotspot" slot="hotspot-3" data-position="0.1710445942576m 0.004115679722560231m 0.12111805547572145m" data-normal="1m 0m 0m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">ADXL345 Accelerometer</div>
-						</button><button class="hotspot" slot="hotspot-4" data-position="0.1381164021569825m 0.007873874001384285m 0.11309986520638787m" data-normal="-0.6069136033622302m 0m -0.7947678139267301m" data-visibility-attribute="visible">
-							<div class="hotspotAnnotation">Buzzer</div>
-						</button>       
-                        
-                    -->
                 </model-viewer>
-                
-                <!-- Fallback error message -->
-                <div class="fallback-message" id="fallback">
-                    <p>We wanted to show the sidekick here but it didn't quite work out!</p>
-                    </br>
-                    <p>:(</p>
-                    </br>
-                    <p>If you are using a privacy-focused browser, please enable WebGL and JIT/Javascript! Try reloading...?s</p>
-                </div>
             </div>
         </div>
-    </div>
-    
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-4 sm:px-8">
+        <h2 class="text-4xl font-bold text-center mb-12 tracking-tighter">What makes Sidekick special?</h2>
+        <div id="features-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Feature cards will be injected here -->
+        </div>
+    </section>
+
+    <!-- Cost Breakdown Section -->
+    <section id="costs" class="py-24 px-4 sm:px-8 bg-gray-900">
+        <h2 class="text-4xl font-bold text-center mb-12 tracking-tighter">Transparent Pricing</h2>
+        <div id="cost-breakdown" class="max-w-4xl mx-auto">
+            <!-- Cost data will be injected here -->
+        </div>
+    </section>
+
+    <!-- Pre-order Section -->
+    <section id="preorder" class="py-24 px-4 sm:px-8 bg-accent text-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4 tracking-tighter">Pre-order Your Sidekick</h2>
+            <p class="text-xl mb-8">Be among the first to own a Sidekick. Limited early bird pricing available.</p>
+            <button class="bg-black text-white font-bold py-4 px-10 rounded-xl text-lg hover:bg-gray-800 transition-colors">Pre-order Coming Soon</button>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <a href="https://github.com/meetsidekick" target="_blank" rel="noopener noreferrer" class="github-link">
-                <span class="github-text">open source</span>
-                <span class="github-arrow">→</span>
+    <footer class="py-8 px-4 sm:px-8 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-gray-500 text-center sm:text-left">Disclaimer: Sidekick is an independent open-source hardware project. <br>Not affiliated with Sidekick Browser or any other 'Sidekick' products</p>
+            <a href="https://engineering.meetsidekick.tech/docs/reference/open-source/" target="_blank" rel="noopener noreferrer" class="bg-gray-800 text-white font-bold py-2 px-6 rounded-xl hover:bg-accent hover:text-black transition-colors text-sm">
+                Open Source
             </a>
         </div>
     </footer>
-    
-    <script src="app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch and display features
+            fetch('features.json')
+                .then(response => response.json())
+                .then(data => {
+                    const featuresGrid = document.getElementById('features-grid');
+                    const featuresHtml = data.map(feature => {
+                        const iconUrl = `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/${feature.icon}.svg`;
+                        return `
+                        <div class="bg-gray-900 p-8 rounded-xl border border-gray-800 transform hover:scale-105 hover:border-accent transition-all duration-300 flex flex-col items-center text-center">
+                            <div class="w-12 h-12 mb-4 flex items-center justify-center" style="background-color: var(--accent-color); -webkit-mask: url(${iconUrl}) no-repeat center; mask: url(${iconUrl}) no-repeat center;"></div>
+                            <h3 class="text-2xl font-bold mb-2">${feature.title}</h3>
+                            <p class="text-gray-400">${feature.description}</p>
+                        </div>
+                    `}).join('');
+                    featuresGrid.innerHTML = featuresHtml;
+                });
+
+            // Fetch and display preorders
+            fetch('preorders.json')
+                .then(response => response.json())
+                .then(data => {
+                    const preorderStatus = document.getElementById('preorder-status');
+                    preorderStatus.innerHTML = `<p>${data.preorders} pre-orders from ${data.backers} backers! Join them!</p>`;
+                });
+
+            // Fetch and display costs
+            fetch('costs.json')
+                .then(response => response.json())
+                .then(data => {
+                    const costBreakdown = document.getElementById('cost-breakdown');
+                    let totalCost = 0;
+                    const itemsHtml = data.items.map(item => {
+                        totalCost += item.cost;
+                        return `
+                        <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                            <p class="text-gray-300">${item.name} <span class="text-xs text-gray-500">${item.desc}</span></p>
+                            <p class="font-mono text-gray-300">${data.currency} ${item.cost.toFixed(2)}</p>
+                        </div>
+                        `;
+                    }).join('');
+
+                    const extraCostsHtml = data.extraCost.map(item => {
+                        totalCost += item.cost;
+                        return `
+                        <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                            <p class="text-gray-300">${item.name}</p>
+                            <p class="font-mono text-gray-300">${data.currency} ${item.cost.toFixed(2)}</p>
+                        </div>
+                        `;
+                    }).join('');
+
+                    const finalCostHtml = `
+                        <div class="flex justify-between items-center pt-4 font-bold text-lg text-white">
+                            <p>Total Estimated Cost</p>
+                            <p class="font-mono">${data.currency} ${totalCost.toFixed(2)}</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 font-bold text-xl text-accent">
+                            <p>Final Price</p>
+                            <p class="font-mono">${data.currency} ${data['Final Sidekick Cost']}</p>
+                        </div>
+                    `;
+
+                    costBreakdown.innerHTML = itemsHtml + extraCostsHtml + finalCostHtml;
+                });
+        });
+    </script>
+
 </body>
 </html>
