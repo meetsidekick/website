@@ -2,6 +2,7 @@
 mono/
 *.bak
 *.old
+assets/media_cache/*.mp4
 
 # pixi environments
 .pixi/*
