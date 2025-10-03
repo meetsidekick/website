@@ -1,0 +1,13 @@
+[workspace]
+authors = ["SoundDrill31 <84176052+sounddrill31@users.noreply.github.com>"]
+channels = ["conda-forge"]
+name = "website"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+build = "python fetch_posts.py"
+dev = "python fetch_posts.py && python -m http.server 8000"
+[dependencies]
+python = ">=3.13.7,<3.14"
+feedparser = ">=6.0.12,<7"

@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script>
         tailwind.config = {
@@ -17,7 +18,7 @@
                         'mono': ['"Space Mono"', 'monospace'],
                     },
                     colors: {
-                        'accent': '#9f55ff', // Vibrant Purple
+                        'accent': '#FFDF00', // Sunshine Yellow
                         'primary': '#000000', // Black
                         'secondary': '#1a1a1a', // Dark Gray
                         'light': '#ffffff', // White
@@ -26,7 +27,7 @@
                         'xl': '1rem',
                     },
                     boxShadow: {
-                        'glow': '0 0 20px 0 rgba(159, 85, 255, 0.8)',
+                        'glow': '0 0 20px 0 rgba(255, 223, 0, 0.8)',
                     }
                 }
             }
@@ -34,7 +35,7 @@
     </script>
     <style>
         :root {
-            --accent-color: #9f55ff;
+            --accent-color: #FFDF00;
         }
         body {
             font-family: 'Space Mono', monospace;
@@ -45,12 +46,48 @@
             width: 100%;
             height: 500px;
             border-radius: 1rem;
-            border: 2px solid #9f55ff;
-            box-shadow: 0 0 20px 0 rgba(159, 85, 255, 0.5);
+            border: 2px solid #FFDF00;
+            box-shadow: 0 0 20px 0 rgba(255, 223, 0, 0.5);
         }
         .bg-grid-gray-900\/50 {
             background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
+        }
+        #media-modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        #modal-content-container {
+            margin: auto;
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -124,6 +161,36 @@
         </div>
     </section>
 
+    <!-- Kits and Guides Section -->
+    <section id="kits-and-guides" class="py-24 px-4 sm:px-8">
+        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+            <div class="bg-secondary p-8 rounded-xl border border-gray-800 transform hover:scale-105 hover:border-accent transition-all duration-300 flex flex-col items-center text-center">
+                <h3 class="text-2xl font-bold mb-2">Sidekick Kits (Concept/WIP)</h3>
+                <p class="text-gray-400">Build your own Sidekick from a curated kit of parts. Perfect for beginners and experienced makers alike.</p>
+            </div>
+            <div class="bg-secondary p-8 rounded-xl border border-gray-800 transform hover:scale-105 hover:border-accent transition-all duration-300 flex flex-col items-center text-center">
+                <h3 class="text-2xl font-bold mb-2">Engineer your Own</h3>
+                <p class="text-gray-400">A comprehensive guide to sourcing parts and building your Sidekick from scratch. (Guide Coming Soon)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fediverse Timeline Section -->
+    <section id="timeline" class="py-24 px-4 sm:px-8 bg-primary">
+        <h2 class="text-4xl font-bold text-center mb-12 tracking-tighter"><a href="https://infosec.exchange/@sounddrill/tagged/sidekick" target="_target">#sidekick on the Fediverse</a></h2>
+        <div id="fediverse-posts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Fediverse posts will be injected here -->
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="media-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <div id="modal-content-container" class="modal-content">
+            <!-- Content will be injected here -->
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-8 px-4 sm:px-8 border-t border-gray-800">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -145,7 +212,7 @@
                         const iconUrl = `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/${feature.icon}.svg`;
                         return `
                         <div class="bg-gray-900 p-8 rounded-xl border border-gray-800 transform hover:scale-105 hover:border-accent transition-all duration-300 flex flex-col items-center text-center">
-                            <div class="w-12 h-12 mb-4 flex items-center justify-center" style="background-color: var(--accent-color); -webkit-mask: url(${iconUrl}) no-repeat center; mask: url(${iconUrl}) no-repeat center;"></div>
+                            <div class="w-24 h-24 mb-6 flex items-center justify-center" style="background-color: var(--accent-color); -webkit-mask: url(${iconUrl}) no-repeat center; mask: url(${iconUrl}) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"></div>
                             <h3 class="text-2xl font-bold mb-2">${feature.title}</h3>
                             <p class="text-gray-400">${feature.description}</p>
                         </div>
@@ -200,6 +267,92 @@
 
                     costBreakdown.innerHTML = itemsHtml + extraCostsHtml + finalCostHtml;
                 });
+
+            // Fetch and display Fediverse posts
+            const fediversePostsContainer = document.getElementById('fediverse-posts');
+            fetch('links-autogenerated.json')
+                .then(response => response.json())
+                .then(posts => {
+                    let postsHtml = '';
+                    posts.forEach(post => {
+                        const pubDate = new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                        
+                        let mediaHtml = '';
+                        if (post.media_content && post.media_content.length > 0) {
+                            mediaHtml += '<div class="flex flex-wrap gap-2 mt-4">';
+                            post.media_content.forEach((media, index) => {
+                                if (media.type && media.type.startsWith('image/')) {
+                                    mediaHtml += `<img src="${media.url}" alt="Fediverse post media ${index + 1}" class="w-12 h-12 object-cover rounded-lg cursor-pointer" onclick="openModal('${media.url}', 'image')">`;
+                                } else if (media.type && media.type.startsWith('video/')) {
+                                    mediaHtml += `<div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center cursor-pointer" onclick="openModal('${media.url}', 'video')"><i class="bi bi-play-circle-fill text-accent text-2xl"></i></div>`;
+                                }
+                            });
+                            mediaHtml += '</div>';
+                        }
+
+                        postsHtml += `
+                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-800 flex flex-col justify-between transform hover:scale-105 hover:border-accent transition-all duration-300">
+                            <div>
+                                <div class="flex justify-between items-center mb-4">
+                                    <div class="text-gray-400 text-sm">${pubDate}</div>
+                                    <div class="flex space-x-2">
+                                        <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-accent" title="Open in new tab">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                        <button onclick="copyToClipboard('${post.link}', this)" class="text-gray-400 hover:text-accent" title="Copy link">
+                                            <i class="bi bi-clipboard"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-gray-300 text-base fediverse-post-content overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical;">${post.description}</div>
+                                ${mediaHtml}
+                            </div>
+                        </div>
+                        `;
+                    });
+                    fediversePostsContainer.innerHTML = postsHtml;
+                })
+                .catch(error => {
+                    console.error('Error fetching Fediverse posts:', error);
+                    fediversePostsContainer.innerHTML = `<div class="text-center text-gray-500 col-span-full">Could not load Fediverse posts.</div>`;
+                });
+
+            window.copyToClipboard = (text, el) => {
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalIcon = el.innerHTML;
+                    el.innerHTML = '<i class="bi bi-check-lg"></i>';
+                    setTimeout(() => {
+                        el.innerHTML = originalIcon;
+                    }, 2000);
+                }, (err) => {
+                    console.error('Could not copy text: ', err);
+                });
+            }
+
+            const modal = document.getElementById("media-modal");
+            const modalContentContainer = document.getElementById("modal-content-container");
+            const span = document.getElementsByClassName("close-modal")[0];
+
+            window.openModal = (src, type) => {
+                modal.style.display = "flex";
+                if (type === 'image') {
+                    modalContentContainer.innerHTML = `<img src="${src}" class="max-w-full max-h-full object-contain">`;
+                } else if (type === 'video') {
+                    modalContentContainer.innerHTML = `<video controls autoplay src="${src}" class="max-w-full max-h-full"></video>`;
+                }
+            }
+
+            span.onclick = function() {
+                modal.style.display = "none";
+                modalContentContainer.innerHTML = '';
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    modalContentContainer.innerHTML = '';
+                }
+            }
         });
     </script>
 
