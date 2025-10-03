@@ -38,7 +38,7 @@
       "link": "https://robu.in/product/sm4007pl-a7-slkor-1a-1kv-1-1v1a-sod-123fl-diodes-general-purpose-rohs/"
     },
     {
-      "name": "1kOhm Resistor",
+      "name": "1k Ohm Resistor",
       "desc": "1k Ohm Resistor",
       "cost": 10,
       "link": "https://robocraze.com/products/1k-ohm-resistor-5-pack"
@@ -57,13 +57,13 @@
     },
     {
       "name": "Case",
-      "desc": "By Absurd.Industries",
+      "desc": "Printed By Absurd.Industries",
       "cost": 120,
       "link": "https://github.com/meetsidekick/case/"
     }
   ],
   "extraCost": [
-    { "name": "GST", "cost": 229.68 }
+    { "name": "GST", "percentage": 18, "desc": "18% on total components cost" }
   ],
   "Final Sidekick Cost(Excl GST, Shipping, Dev Costs)": 2000,
   "Final Sidekick Cost": "2000 to 3000"

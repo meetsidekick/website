@@ -11,3 +11,4 @@ dev = "python fetch_posts.py && python -m http.server 8000"
 [dependencies]
 python = ">=3.13.7,<3.14"
 feedparser = ">=6.0.12,<7"
+requests = ">=2.32.5,<3"

@@ -1,8 +1,15 @@
 import feedparser
 import json
 import os
+import requests
+from urllib.parse import urlparse
 
 def main():
+    # Define the cache directory relative to the script location
+    CACHE_DIR = "assets/media_cache"
+    if not os.path.exists(CACHE_DIR):
+        os.makedirs(CACHE_DIR)
+
     rss_url = "https://infosec.exchange/@sounddrill/tagged/sidekick.rss"
     feed = feedparser.parse(rss_url)
     
@@ -11,8 +18,39 @@ def main():
         media_content = []
         if hasattr(entry, 'media_content'):
             for media in entry.media_content:
+                media_url = media.get('url')
+                if not media_url:
+                    continue
+
+                # Generate a local filename from the URL
+                try:
+                    parsed_url = urlparse(media_url)
+                    filename = os.path.basename(parsed_url.path)
+                    if not filename:
+                        # If path is empty, create a name from the URL hash or something
+                        filename = str(hash(media_url)) + '.' + media.get('type', 'image/jpeg').split('/')[1]
+
+                    local_path = os.path.join(CACHE_DIR, filename)
+                    
+                    # Download the file if it doesn't exist locally
+                    if not os.path.exists(local_path):
+                        print(f"Downloading {media_url} to {local_path}...")
+                        response = requests.get(media_url, stream=True, timeout=10)
+                        response.raise_for_status()
+                        with open(local_path, 'wb') as f:
+                            for chunk in response.iter_content(chunk_size=8192):
+                                f.write(chunk)
+                    else:
+                        print(f"Skipping existing file: {local_path}")
+                except requests.exceptions.RequestException as e:
+                    print(f"Error downloading {media_url}: {e}")
+                    continue # Skip this media item if download fails
+                except Exception as e:
+                    print(f"An error occurred processing {media_url}: {e}")
+                    continue
+
                 media_item = {
-                    'url': media.get('url'),
+                    'url': local_path, # Use the local path
                     'type': media.get('type'),
                     'medium': media.get('medium')
                 }
