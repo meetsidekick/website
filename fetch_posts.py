@@ -22,35 +22,51 @@ def main():
                 if not media_url:
                     continue
 
-                # Generate a local filename from the URL
+                # Define the size limit (10MB)
+                MAX_SIZE = 10 * 1024 * 1024
+                
                 try:
+                    # Use a HEAD request to check the content length
+                    head_response = requests.head(media_url, allow_redirects=True, timeout=10)
+                    head_response.raise_for_status()
+                    size = int(head_response.headers.get('content-length', 0))
+
+                    # Generate a local filename from the URL
                     parsed_url = urlparse(media_url)
                     filename = os.path.basename(parsed_url.path)
                     if not filename:
-                        # If path is empty, create a name from the URL hash or something
                         filename = str(hash(media_url)) + '.' + media.get('type', 'image/jpeg').split('/')[1]
-
+                    
                     local_path = os.path.join(CACHE_DIR, filename)
                     
-                    # Download the file if it doesn't exist locally
-                    if not os.path.exists(local_path):
-                        print(f"Downloading {media_url} to {local_path}...")
-                        response = requests.get(media_url, stream=True, timeout=10)
-                        response.raise_for_status()
-                        with open(local_path, 'wb') as f:
-                            for chunk in response.iter_content(chunk_size=8192):
-                                f.write(chunk)
+                    media_path_to_use = media_url # Default to original URL
+
+                    # Download only if the file is within the size limit
+                    if size > 0 and size <= MAX_SIZE:
+                        if not os.path.exists(local_path):
+                            print(f"File size {size / 1024 / 1024:.2f}MB. Downloading {media_url} to {local_path}...")
+                            response = requests.get(media_url, stream=True, timeout=30)
+                            response.raise_for_status()
+                            with open(local_path, 'wb') as f:
+                                for chunk in response.iter_content(chunk_size=8192):
+                                    f.write(chunk)
+                        else:
+                            print(f"Skipping existing file: {local_path}")
+                        media_path_to_use = local_path # Use local path for smaller files
+                    elif size > MAX_SIZE:
+                        print(f"File size {size / 1024 / 1024:.2f}MB is over the limit. Streaming from {media_url}")
                     else:
-                        print(f"Skipping existing file: {local_path}")
+                        print(f"Could not determine file size for {media_url}. Streaming from origin.")
+
                 except requests.exceptions.RequestException as e:
-                    print(f"Error downloading {media_url}: {e}")
-                    continue # Skip this media item if download fails
+                    print(f"Error processing {media_url}: {e}")
+                    continue # Skip this media item if there's an error
                 except Exception as e:
-                    print(f"An error occurred processing {media_url}: {e}")
+                    print(f"An unexpected error occurred with {media_url}: {e}")
                     continue
 
                 media_item = {
-                    'url': local_path, # Use the local path
+                    'url': media_path_to_use, # Use the determined path
                     'type': media.get('type'),
                     'medium': media.get('medium')
                 }
